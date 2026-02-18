@@ -1,0 +1,19 @@
+[project]
+name = "fashion-reviews-pyspark"
+version = "0.1.0"
+description = "PySpark analysis of Amazon Fashion reviews: what makes a review helpful?"
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning",
+]

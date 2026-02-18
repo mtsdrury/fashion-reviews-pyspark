@@ -1,0 +1,43 @@
+# Data
+data/raw/*.parquet
+data/raw/*.json
+data/processed/
+*.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.venv/
+venv/
+
+# Linting
+.ruff_cache/
+
+# Spark
+metastore_db/
+derby.log
+spark-warehouse/
+
+# Results (keep figures tracked)
+results/metrics/
