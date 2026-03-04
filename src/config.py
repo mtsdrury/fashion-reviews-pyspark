@@ -11,6 +11,7 @@ RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 RESULTS_DIR = PROJECT_ROOT / "results"
 FIGURES_DIR = RESULTS_DIR / "figures"
+TABLEAU_DIR = DATA_DIR / "tableau"
 
 # Parquet file names
 REVIEWS_PARQUET = RAW_DIR / "reviews.parquet"

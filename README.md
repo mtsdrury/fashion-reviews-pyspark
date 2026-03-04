@@ -62,13 +62,15 @@ fashion-reviews-pyspark/
 ├── requirements.txt
 ├── data/
 │   ├── raw/README.md              # Download instructions
-│   └── processed/                 # Cleaned Parquet (gitignored)
+│   ├── processed/                 # Cleaned Parquet (gitignored)
+│   └── tableau/                   # Aggregated CSVs for Tableau dashboard
 ├── src/
 │   ├── config.py                  # Paths, constants, Spark config
 │   ├── spark_session.py           # SparkSession factory
 │   ├── data_loader.py             # HuggingFace download + Parquet I/O
 │   ├── preprocessing.py           # Cleaning, feature eng, joins, windows
 │   ├── analysis.py                # 4 exploratory analyses
+│   ├── export_tableau_data.py     # CSV export for Tableau dashboard
 │   ├── text_pipeline.py           # MLlib TF-IDF + classification
 │   ├── evaluation.py              # Classifier metrics
 │   └── visualization.py           # Matplotlib/Seaborn plots
@@ -79,6 +81,30 @@ fashion-reviews-pyspark/
     └── figures/                   # Saved plots
 ```
 
+## Tableau Dashboard
+
+An interactive Tableau Public dashboard extends this analysis with 4 views: KPI scorecards with rating distribution, helpfulness drivers (text length, star rating, photos), price tier insights, and temporal trends. Built from aggregated CSVs exported by `src/export_tableau_data.py`.
+
+**[View the dashboard on Tableau Public](https://public.tableau.com/app/profile/mackenzie.drury/viz/AmazonFashionReviewsWhatMakesaReviewHelpful/FashionReviewsIntelligenceDashboard)**
+
+### Export CSVs for Tableau
+
+```bash
+python -m src.export_tableau_data
+```
+
+This runs the full pipeline (`USE_SAMPLE = False`) and writes 7 aggregated tables to `data/tableau/`:
+
+| File | Rows | Description |
+|------|------|-------------|
+| `rating_by_verified.csv` | 10 | Rating distribution split by verified purchase |
+| `helpfulness_by_price_tier.csv` | 4 | Helpful rate by price quartile |
+| `temporal_trends.csv` | ~100 | Monthly review count with rolling 3-month average |
+| `helpfulness_by_text_length.csv` | 6 | Helpful rate by text length bin |
+| `helpfulness_by_rating.csv` | 5 | Helpful rate by star rating |
+| `photo_impact.csv` | 2 | Photo vs. text-only review helpfulness |
+| `yearly_satisfaction.csv` | ~11 | Average rating and volume by year (2013+) |
+
 ## Dataset
 
 [McAuley-Lab/Amazon-Reviews-2023](https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023) (Amazon Fashion category). Downloaded automatically via the HuggingFace `datasets` library. Parquet files are gitignored.
@@ -87,6 +113,7 @@ fashion-reviews-pyspark/
 
 - **PySpark 3.5** (DataFrames, Spark SQL, MLlib)
 - **Python 3.10+**
-- **Matplotlib / Seaborn** (visualization)
+- **Tableau Public** (interactive dashboard)
+- **Matplotlib / Seaborn** (static visualization)
 - **Pytest** (testing)
 - **GitHub Actions** (CI)
