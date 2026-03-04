@@ -10,8 +10,13 @@ Usage:
 
 from pyspark.sql import functions as F
 
+from src.analysis import (
+    helpfulness_by_price_tier,
+    helpfulness_by_text_length,
+    rating_by_verified,
+    temporal_trends_sql,
+)
 from src.config import METADATA_PARQUET, REVIEWS_PARQUET, TABLEAU_DIR
-from src.spark_session import get_spark_session
 from src.data_loader import (
     download_metadata,
     download_reviews,
@@ -27,12 +32,7 @@ from src.preprocessing import (
     parse_price,
     parse_timestamp,
 )
-from src.analysis import (
-    helpfulness_by_price_tier,
-    helpfulness_by_text_length,
-    rating_by_verified,
-    temporal_trends_sql,
-)
+from src.spark_session import get_spark_session
 
 
 def _save_csv(df, name: str) -> None:
